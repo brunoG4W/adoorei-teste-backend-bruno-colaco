@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Models\Sale;
+
 class SalesController extends Controller
 {
     public function listProducts() : Response 
@@ -13,9 +15,14 @@ class SalesController extends Controller
         return response()->json(['ok'], 200);
     }
 
-    public function addSale() : Response 
+    public function addSale( Request $request) : Response 
     {     
-        return response()->json(['ok'], 200);
+
+
+        return response()->json([
+			'data' => Sale::create($request->all())
+		], 201); 
+
     }
 
     public function listSales() : Response 

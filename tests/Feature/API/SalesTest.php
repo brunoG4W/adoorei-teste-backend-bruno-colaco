@@ -15,19 +15,21 @@ class SalesTest extends TestCase
 {
 
     public function test_post_create_sale_endpoint(): void
-    {
-
+    {        
         $sale = Sale::factory()->has(Product::factory()->count(2) )->create();
-
         $response = $this->postJson(
             route('api.sales.create'),
             $sale->toArray()
         );
-        $response->assertStatus(200);
+        $response->assertCreated();      
     }
 
     public function test_post_add_product_to_sale_endpoint(): void
     {
+
+        $sales = Sale::all();
+
+        dd($sales);
         $response = $this->postJson(route('api.sales.products.add', 1));
         $response->assertStatus(200);
     }
