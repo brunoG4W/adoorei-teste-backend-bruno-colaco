@@ -13,4 +13,9 @@ class Product extends Model
         'price' => 'float',
     ];
     
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

@@ -7,20 +7,22 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\Product;
+use App\Http\Resources\ProductResource;
 
 class ProductsController extends Controller
 {
 
-    public function __construct(private Product $product)
-    {
-    }
 
 
 
-    public function listProducts() : Response 
+    public function listProducts() //: Response 
     {     
-        return response()->json($this->product->all());
-        
+        $products =  ProductResource::collection(Product::all());      
+        return response()->json([
+            'success'   => true,
+            'message'   => '',
+            'data'      => $products
+        ], 200);   
     }
 }
 

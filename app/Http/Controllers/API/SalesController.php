@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Models\Sale;
+use App\Http\Resources\SaleResource;
 use App\Models\Product;
 
 use App\Http\Requests\CreateSaleRequest;
@@ -14,6 +15,7 @@ use App\Http\Requests\AddProductsToSaleRequest;
 use Illuminate\Database\Eloquent\Collection;
 
 class SalesController extends Controller
+
 {
     public function __construct(private Sale $sale)
     {
@@ -42,7 +44,7 @@ class SalesController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Sale created',
-            'data'      => $sale->toArray()
+            'data'      => new SaleResource($sale)
         ], 201); 
     }
 
@@ -58,7 +60,6 @@ class SalesController extends Controller
                 $sale->products()->attach( $product['id'], ['amount' => $product['amount']]);
             }       
 
-            // $sale->products()->saveMany($products);
             $sale->refresh();
             $sale->load('products');
         } catch (\Throwable $th) {
@@ -72,28 +73,26 @@ class SalesController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Products added to sale',
-            'data'      => $sale->toArray(),
+            'data'      => new SaleResource($sale),
         ], 201);
     }
 
     public function listSales() : Response 
     {     
-        $sales = $this->sale->with('products')->get();
+        $sales = SaleResource::collection(Sale::all());//$this->sale->with('products')->get();
         return response()->json([
             'success'   => true,
             'message'   => '',
-            'data'      => $sales->toArray()
+            'data'      => $sales,
         ], 200);         
     }
 
     public function getSale(Sale $sale) : Response 
     {     
-        $sale->load('products');
-
         return response()->json([
             'success'   => true,
             'message'   => '',
-            'data'      => $sale->toArray()
+            'data'      => new SaleResource($sale),
         ], 200);   
     }
 

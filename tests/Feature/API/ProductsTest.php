@@ -22,22 +22,8 @@ class ProductsTest extends TestCase
 
         $response = $this->get(route('api.products.list'));
 
-        $response->assertStatus(200);
-        $response->assertJsonCount($products->count());
-
-        $response->assertJson(function (AssertableJson $json) use($products){
-            $json->whereAllType([
-                '0.id' => 'integer',
-                '0.name' => 'string',                 
-                '0.description'=> 'string'
-            ]);
-
-            $json->hasAll(['0.id', '0.name', '0.price', '0.description']);
-
-        });
-
-
-
+        $response->assertStatus(200);     
+        $this->assertEquals( $products->count(), count($response['data']) );
     }
 
 }

@@ -31,6 +31,7 @@ class SalesTest extends TestCase
         $sale_array['amount'] = $sale_array['products']->sum(function ($item) {
             return $item['price'] * $item['amount'];
         });
+        number_format($sale_array['amount'] , 2, '.', '');
         
         $response = $this->postJson(
             route('api.sales.create'),
@@ -61,6 +62,9 @@ class SalesTest extends TestCase
             return $item;
         });
         $soma = count($sale['products']) + $products->count();
+
+
+   
 
         $response = $this->postJson(
             route( 'api.sales.products.add', $sale['id']), 
