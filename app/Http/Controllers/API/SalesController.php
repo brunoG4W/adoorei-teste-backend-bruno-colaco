@@ -10,7 +10,8 @@ use App\Models\Sale;
 use App\Models\Product;
 
 use App\Http\Requests\CreateSaleRequest;
-
+use App\Http\Requests\AddProductsToSaleRequest;
+use Illuminate\Database\Eloquent\Collection;
 
 class SalesController extends Controller
 {
@@ -27,6 +28,8 @@ class SalesController extends Controller
     {   
         $request = $request->validated();
 
+        $products = $this->getProductsCollectionFromRequest($request['products']);
+
         $products_ids = array_column($request['products'], 'id');
         $products = Product::whereIn('id', $products_ids)->get();
 
@@ -34,39 +37,44 @@ class SalesController extends Controller
             $sale = $this->sale->create(['amount' => $request['amount']]);        
             $sale->products()->saveMany($products);
             $sale->refresh();
+            $sale->load('products');
         } catch (\Throwable $th) {
             return response()->json([
                 'success'   => false,
                 'message'   => $th->getMessage(),
                 'data'      => ''
-            ], 201); 
+            ], 500); 
         }
 
         return response()->json([
             'success'   => true,
             'message'   => 'Sale created',
-            'data'      => $sale
+            'data'      => $sale->toArray()
         ], 201); 
     }
 
-    public function addProductsToSale(Sale $sale, Request $request) : Response 
+    public function addProductsToSale(Sale $sale, AddProductsToSaleRequest $request) : Response 
     {   
+        $request = $request->validated();
+        $products = $this->getProductsCollectionFromRequest($request['products']);
 
-        dump($sale->toArray());
+        try {    
+            $sale->products()->saveMany($products);
+            $sale->refresh();
+            $sale->load('products');
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success'   => false,
+                'message'   => $th->getMessage(),
+                'data'      => ''
+            ], 500); 
+        }
 
-        dd($request->products);
-
-        $products = Product::whereIn('id', $request->products)->get();
-        
-        dd($products);
-        die();
-        // $products = Product::whereIn('id', $request->all())->get();
-        
-
-
-        // dd($products);
-
-        return response()->json(['ok'], 200);
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Products added to sale',
+            'data'      => $sale->toArray(),
+        ], 201);
     }
 
     public function listSales() : Response 
@@ -85,4 +93,11 @@ class SalesController extends Controller
     }
 
 
+
+    public function getProductsCollectionFromRequest($products) : Collection
+    {
+        $products_ids = array_column($products, 'id');
+        $products = Product::whereIn('id', $products_ids)->get();
+        return $products;
+    }
 }

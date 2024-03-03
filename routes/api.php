@@ -13,7 +13,7 @@ Route::get('products', [ProductsController::class, 'listProducts'])->name('api.p
 Route::post('sale', [SalesController::class, 'addSale'])->name('api.sales.create');
 
 //Cadastrar novas produtos a uma venda]
-Route::post('sale/{sale }/add_products', [SalesController::class, 'addProductsToSale'])->name('api.sales.products.add');
+Route::post('sale/{sale}/add_products', [SalesController::class, 'addProductsToSale'])->name('api.sales.products.add');
 
 
 //Consultar vendas realizadas

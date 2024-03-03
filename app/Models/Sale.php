@@ -15,6 +15,12 @@ class Sale extends Model
         'amount',
     ];
 
+    protected $visible = [
+        'id',
+        'amount',
+        'products',
+    ];
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_sale', 'sale_id', 'product_id');
