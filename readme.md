@@ -2,9 +2,9 @@
 
 Teste Bruno Colaço - brunowow@gmail.com
 
-- clone repo
+utilizando docker com laravel sail
 - sail up
-- arquivo postman : 
+- arquivo postman : adooreitest_bruno_colaco_postman.json
 
 </p>
 
