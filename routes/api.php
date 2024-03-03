@@ -20,7 +20,7 @@ Route::post('sale/{sale}/add_products', [SalesController::class, 'addProductsToS
 Route::get('sales', [SalesController::class, 'listSales'])->name('api.sales.list');
 
 //Consultar uma venda específica
-Route::get('sales/{id}', [SalesController::class, 'getSale'])->name('api.sales.detail');
+Route::get('sales/{sale}', [SalesController::class, 'getSale'])->name('api.sales.detail');
 
 //Cancelar uma venda
 Route::post('sale/{id}/cancel', [SalesController::class, 'cancelSale'])->name('api.sales.cancel');

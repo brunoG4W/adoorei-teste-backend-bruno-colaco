@@ -72,8 +72,14 @@ class SalesTest extends TestCase
 
     public function test_get_sale_details_endpoint(): void
     {
-        $response = $this->getJson(route('api.sales.detail', 1));
+
+        $this->seed(SaleSeeder::class);
+        $sale = Sale::inRandomOrder()->first();        
+
+        $response = $this->getJson(route('api.sales.detail', $sale->id));
+
         $response->assertStatus(200);
+        $this->assertEquals( $sale->id, $response['data']['id'] );
     }
 
     public function test_post_cancel_sale_endpoint(): void

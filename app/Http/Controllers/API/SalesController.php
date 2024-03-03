@@ -82,9 +82,15 @@ class SalesController extends Controller
         ], 200);         
     }
 
-    public function getSale() : Response 
+    public function getSale(Sale $sale) : Response 
     {     
-        return response()->json(['ok'], 200);
+        $sale->load('products');
+
+        return response()->json([
+            'success'   => true,
+            'message'   => '',
+            'data'      => $sale->toArray()
+        ], 200);   
     }
 
     public function cancelSale() : Response 
