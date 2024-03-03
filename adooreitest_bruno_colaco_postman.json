@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "8c75bb16-5627-4e76-ab1b-24fb5adf3af7",
+		"name": "adoorei_test_bruno_colaco_collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3941296"
+	},
+	"item": [
+		{
+			"name": "api/products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/sale",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 6257.18,\n    \"products\": [\n        {\n            \"id\": 11,\n            \"name\": \"celular-4927\",\n            \"price\": 905.1,\n            \"amount\": 3\n        },\n        {\n            \"id\": 12,\n            \"name\": \"celular-5169\",\n            \"price\": 885.47,\n            \"amount\": 4\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/sale",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sale"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/sale/{sale}/add_products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"products\": [\n        {\n            \"id\": 24,\n            \"name\": \"celular-0087\",\n            \"price\": 908.25,\n            \"amount\": 4\n        },\n        {\n            \"id\": 25,\n            \"name\": \"celular-6452\",\n            \"price\": 898.02,\n            \"amount\": 4\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/sale/1/add_products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sale",
+						"1",
+						"add_products"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": ":sale = sale_id"
+			},
+			"response": []
+		},
+		{
+			"name": "api/sales",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/sales",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/sales/{sale}",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/sales/:sale",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sales",
+						":sale"
+					],
+					"variable": [
+						{
+							"key": "sale"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/sale/{sale}/cancel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/sale/:sale/cancel",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sale",
+						":sale",
+						"cancel"
+					],
+					"variable": [
+						{
+							"key": "sale"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost"
+		}
+	]
+}
