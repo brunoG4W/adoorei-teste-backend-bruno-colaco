@@ -37,22 +37,26 @@ class SalesTest extends TestCase
     }
 
     public function test_post_add_product_to_sale_endpoint(): void
-    {
+    {              
+        $this->seed(SaleSeeder::class);
+        // pego a primeira que tiver no db pra testar
+        $sale = Sale::with('products')->first()->toArray();
 
-               // $this->seed(SaleSeeder::class);
+        //pego um produto que não esteja nessa venda
+        $products = Product::whereNotIn('id', array_column($sale['products'], 'id'))
+                            ->limit(2)
+                            ->get();
 
-            //    dd(Product::all());
-               // dd(Sale::all());
-        // dump('test_post_add_product_to_sale_endpoint');
-        // $sale = Sale::factory()->has(Product::factory()->count(2) )->create();
-        // $products = Product::factory(2)->make()->pluck('id')->toArray();
+        $soma = count($sale['products']) + $products->count();
 
-        // $response = $this->postJson(route( 'api.sales.products.add', $sale->id), ['products' => $products] );
-    
-        // dd($sale->products->toArray());
+        $response = $this->postJson(
+            route( 'api.sales.products.add', $sale['id']), 
+            ['products' => $products] 
+        );
+        
+        $response->assertCreated();          
+        $this->assertEquals( $soma, count($response['data']['products']) );
 
-
-        // $response->assertStatus(200);
     }
 
     public function test_get_sales_endpoint(): void
