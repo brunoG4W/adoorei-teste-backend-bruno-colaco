@@ -19,11 +19,6 @@ class SalesController extends Controller
     {
     }
 
-    public function listProducts() : Response 
-    {     
-        return response()->json(['ok'], 200);
-    }
-
     public function addSale( CreateSaleRequest $request) : Response 
     {   
         $request = $request->validated();
@@ -79,7 +74,12 @@ class SalesController extends Controller
 
     public function listSales() : Response 
     {     
-        return response()->json(['ok'], 200);
+        $sales = $this->sale->with('products')->get();
+        return response()->json([
+            'success'   => true,
+            'message'   => '',
+            'data'      => $sales->toArray()
+        ], 200);         
     }
 
     public function getSale() : Response 

@@ -19,8 +19,5 @@ class SaleSeeder extends Seeder
             ->count(5)            
             ->has(Product::factory()->count(2) )            
             ->create();
-
-
-        // $sale = Sale::factory()->has(Product::factory()->count(2) )->create();
     }
 }
