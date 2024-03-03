@@ -27,7 +27,7 @@ class SaleFactory extends Factory
 
     public function configure()
     {
-        return $this->afterCreating(function (Sale $sale) {
+        return $this->afterMaking(function (Sale $sale) {
             $sum = $sale->products->sum(function ($item) {
                 return $item['price'];
             });
