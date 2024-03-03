@@ -23,5 +23,5 @@ Route::get('sales', [SalesController::class, 'listSales'])->name('api.sales.list
 Route::get('sales/{sale}', [SalesController::class, 'getSale'])->name('api.sales.detail');
 
 //Cancelar uma venda
-Route::post('sale/{id}/cancel', [SalesController::class, 'cancelSale'])->name('api.sales.cancel');
+Route::post('sale/{sale}/cancel', [SalesController::class, 'cancelSale'])->name('api.sales.cancel');
 

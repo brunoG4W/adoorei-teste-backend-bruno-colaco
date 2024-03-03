@@ -93,9 +93,15 @@ class SalesController extends Controller
         ], 200);   
     }
 
-    public function cancelSale() : Response 
-    {     
-        return response()->json(['ok'], 200);
+    public function cancelSale(Sale $sale) : Response 
+    {    
+        $sale->delete();
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Venda cancelada com sucesso',
+            'data'      => []
+        ], 200);   
     }
 
 

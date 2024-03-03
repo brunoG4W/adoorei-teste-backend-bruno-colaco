@@ -72,7 +72,6 @@ class SalesTest extends TestCase
 
     public function test_get_sale_details_endpoint(): void
     {
-
         $this->seed(SaleSeeder::class);
         $sale = Sale::inRandomOrder()->first();        
 
@@ -84,8 +83,13 @@ class SalesTest extends TestCase
 
     public function test_post_cancel_sale_endpoint(): void
     {
-        $response = $this->postJson(route('api.sales.cancel', 1));
+        $this->seed(SaleSeeder::class);
+        $sale = Sale::inRandomOrder()->first();  
+
+        $response = $this->postJson(route('api.sales.cancel', $sale->id));
         $response->assertStatus(200);
+        $this->assertSoftDeleted($sale);
+        
     }
 
 
