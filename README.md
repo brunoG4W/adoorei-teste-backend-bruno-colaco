@@ -1,66 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+
+Teste Bruno Colaço - brunowow@gmail.com
+
+utilizando docker com laravel sail
+- sail up
+- arquivo postman : adooreitest_bruno_colaco_postman.json
+
 </p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<p align="center">
+<a href="hhttps://www.adoorei.com.br/" target="_blank">
+<img src="https://adoorei.s3.us-east-2.amazonaws.com/images/loje_teste_logoadoorei_1662476663.png" width="160"></a>
+</p>
 
-## Learning Laravel
+# Desafio desenvolvedor back-end
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Seja muito bem-vindo(a), futuro desenvolvedor da Adoorei.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Nós, recrutadores juntamente com a nossa equipe de ENGENHARIA, desenvolvemos um teste prático para conhecer um pouco mais sobre suas habilidade 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Objetivo
+Utilizando o  <a href=“https://laravel.com/docs/10.x“>Laravel</a> cria uma API rest, que resolva o seguinte cenário:
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+A Loja ABC LTDA, vende produtos de diferentes nichos. No momento precisamos registrar a venda de celulares.
 
-## Contributing
+Não vamos nos preocupar com o cadastro de produtos, porém precisamos ter uma tabela em nosso banco contendo os aparelhos celulares que vão ser vendidos, por exemplo:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```json
+[
+    {
+        "name": "Celular 1",
+        "price": 1.800,
+        "description": "Lorenzo Ipsulum"
+    },
+    {
+        "name": "Celular 2",
+        "price": 3.200,
+        "description": "Lorem ipsum dolor"
+    },
+    {
+        "name": "Celular 3",
+        "price": 9.800,
+        "description": "Lorem ipsum dolor sit amet"
+    }
+]
+```
 
-## Code of Conduct
+Uma vez que temos os produtos em nosso banco, vamos seguir com o registro de venda desses aparelhos.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Não vamos nós preucupar com informações do comprador, dados de pagamento, entrega, possibilidade de descontos.
 
-## Security Vulnerabilities
+Temos que registrar somente a venda. 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Então nossa consulta vai retornar algo como:
+```json
+{
+  "sales_id": "202301011",
+  "amount": 8200,
+  "products": [
+    {
+      "product_id": 1,
+      "nome": "Celular 1",
+      "price": 1.800,
+      "amount": 1
+    },
+    {
+      "product_id": 2,
+      "nome": "Celular 2",
+      "price": 3.200,
+      "amount": 2
+    },
+  ]
+}
+```
 
-## License
+Nossa API vai ter endpoints que possibilitam
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* Listar produtos disponíveis
+* Cadastrar nova venda
+* Consultar vendas realizadas
+* Consultar uma venda específica
+* Cancelar uma venda
+* Cadastrar novas produtos a uma venda
+
+
+
+
+## Nossa análise
+
+Todo o seu desenvolvimento será levado em consideração. Busque alcançar o seu melhor, utilizando os recursos com os quais você se sente mais confortável.
+
+### É essencial no seu código:
+* Utilizar comandos de Migrate/Seed para a criação e atualização do seu banco de dados.
+* Este projeto é destinado a uma API Rest; portanto, respeite o formato de comunicação de entrada e saída de dados.
+* Faça commits regulares no seu código.
+
+### Pontos que irão destacar você neste desafio:
+* Utilizar Docker para a execução do seu projeto.
+* Implementar testes unitários.
+* Criar documentação para seus endpoints (utilizando ferramentas como Postman ou Insomnia).
+* Aplicar conceitos de Clean Architecture, S.O.L.I.D., Test-Driven Development (TDD), Domain-driven design (DDD), Command Query Responsibility Segregation (CQRS), Objects Calisthenics, You Ain’t Gonna Need It (YAGNI), Conventional Commits, e KISS.
+
+## Nossa análise
+
+Todo o seu desenvolvimento será levado em consideração. Busque alcançar o seu melhor, utilizando os recursos com os quais você se sente mais confortável.
+
+### É essencial no seu código:
+* Utilizar comandos de Migrate/Seed para a criação e atualização do seu banco de dados.
+* Este projeto é destinado a uma API Rest; portanto, respeite o formato de comunicação de entrada e saída de dados.
+* Faça commits regulares no seu código.
+
+### Pontos que irão destacar você neste desafio:
+* Utilizar Docker para a execução do seu projeto.
+* Implementar testes unitários.
+* Criar documentação para seus endpoints (utilizando ferramentas como Postman ou Insomnia).
+* Aplicar conceitos de Clean Architecture, S.O.L.I.D., Test-Driven Development (TDD), Domain-driven design (DDD), Command Query Responsibility Segregation (CQRS), Objects Calisthenics, You Ain’t Gonna Need It (YAGNI), Conventional Commits, e KISS.
+
+
+## Boa sorte!
+
+É isso!. Ficamos muito felizes com a sua aplicação para esse Teste. Estamos à sua disposição para tirar qualquer dúvida. Boa sorte! 😉
