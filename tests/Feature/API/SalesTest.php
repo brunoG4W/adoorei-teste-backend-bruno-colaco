@@ -61,8 +61,13 @@ class SalesTest extends TestCase
 
     public function test_get_sales_endpoint(): void
     {
+        $this->seed(SaleSeeder::class);
+        $sales_count = Sale::all()->count();
+
         $response = $this->getJson(route('api.sales.list'));
+
         $response->assertStatus(200);
+        $this->assertEquals( $sales_count, count($response['data']) );
     }
 
     public function test_get_sale_details_endpoint(): void
