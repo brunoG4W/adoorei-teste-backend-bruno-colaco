@@ -22,15 +22,13 @@ class SalesController extends Controller
     public function addSale( CreateSaleRequest $request) : Response 
     {   
         $request = $request->validated();
-
-        $products = $this->getProductsCollectionFromRequest($request['products']);
-
-        $products_ids = array_column($request['products'], 'id');
-        $products = Product::whereIn('id', $products_ids)->get();
-
         try {
-            $sale = $this->sale->create(['amount' => $request['amount']]);        
-            $sale->products()->saveMany($products);
+            $sale = $this->sale->create(['amount' => $request['amount']]);     
+            
+            foreach($request['products'] as $product)
+            {
+                $sale->products()->attach( $product['id'], ['amount' => $product['amount']]);
+            }           
             $sale->refresh();
             $sale->load('products');
         } catch (\Throwable $th) {
@@ -51,10 +49,16 @@ class SalesController extends Controller
     public function addProductsToSale(Sale $sale, AddProductsToSaleRequest $request) : Response 
     {   
         $request = $request->validated();
-        $products = $this->getProductsCollectionFromRequest($request['products']);
+        // $products = $this->getProductsCollectionFromRequest($request['products']);
 
         try {    
-            $sale->products()->saveMany($products);
+
+            foreach($request['products'] as $product)
+            {
+                $sale->products()->attach( $product['id'], ['amount' => $product['amount']]);
+            }       
+
+            // $sale->products()->saveMany($products);
             $sale->refresh();
             $sale->load('products');
         } catch (\Throwable $th) {

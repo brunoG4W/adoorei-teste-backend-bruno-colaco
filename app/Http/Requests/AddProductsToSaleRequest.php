@@ -24,6 +24,7 @@ class AddProductsToSaleRequest extends FormRequest
         return [
             'products' => 'required|array',
             'products.*.id' => 'required|exists:products',
+            'products.*.amount' => 'required|integer',
         ];
     }
 }

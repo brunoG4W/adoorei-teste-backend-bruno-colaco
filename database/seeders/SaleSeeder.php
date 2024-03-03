@@ -17,7 +17,10 @@ class SaleSeeder extends Seeder
     {
         Sale::factory()
             ->count(5)            
-            ->has(Product::factory()->count(2) )            
+            ->hasAttached(
+                Product::factory()->count(3),
+                ['amount' => rand(1,5)]
+            )      
             ->create();
     }
 }

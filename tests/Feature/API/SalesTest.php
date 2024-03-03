@@ -14,17 +14,24 @@ use Database\Seeders\ProductSeeder;
 
 class SalesTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
     
 
     public function test_post_create_sale_endpoint(): void
-    {         
-        $sale_array = Sale::factory()->has(Product::factory()->count(2) )->make()->toArray();       
-        $sale_array['products'] = Product::factory()->count(2)->create()->toArray();
-        $sale_array['amount'] = collect($sale_array['products'])->sum(function ($item) {
-            return $item['price'];
-        });
+    {       
+        $this->seed(ProductSeeder::class);
 
+        $sale_array = Sale::factory()->has(Product::factory()->count(2) )->make()->toArray();       
+        $sale_array['products'] = Product::select('id','name','price')->limit(2)->get()->toArray();
+        //adiciona uma quantidade
+        $sale_array['products'] = collect( $sale_array['products'] )->map( function($item){
+            $item['amount'] = rand(1,5);
+            return $item;
+        });
+        $sale_array['amount'] = $sale_array['products']->sum(function ($item) {
+            return $item['price'] * $item['amount'];
+        });
+        
         $response = $this->postJson(
             route('api.sales.create'),
             $sale_array,
@@ -36,6 +43,8 @@ class SalesTest extends TestCase
         ]);
     }
 
+    
+
     public function test_post_add_product_to_sale_endpoint(): void
     {              
         $this->seed(SaleSeeder::class);
@@ -44,9 +53,13 @@ class SalesTest extends TestCase
 
         //pego um produto que não esteja nessa venda
         $products = Product::whereNotIn('id', array_column($sale['products'], 'id'))
+                            ->select('id','name','price')
                             ->limit(2)
                             ->get();
-
+        $products->map( function($item){
+            $item['amount'] = rand(1,5);
+            return $item;
+        });
         $soma = count($sale['products']) + $products->count();
 
         $response = $this->postJson(
@@ -91,8 +104,6 @@ class SalesTest extends TestCase
         $this->assertSoftDeleted($sale);
         
     }
-
-
 
     
 }

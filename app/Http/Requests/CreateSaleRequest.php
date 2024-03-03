@@ -28,6 +28,7 @@ class CreateSaleRequest extends FormRequest
             'products' => 'required|array',
 
             'products.*.id' => 'required|exists:products',
+            'products.*.amount' => 'required|integer',
         ];
     }
 }
