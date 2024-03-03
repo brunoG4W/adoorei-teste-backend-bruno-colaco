@@ -3,8 +3,13 @@
 Teste Bruno Colaço - brunowow@gmail.com
 
 utilizando docker com laravel sail
+feature tests cobrindo todos os endpoints
 - sail up
-- arquivo postman : adooreitest_bruno_colaco_postman.json
+- sail artisan test
+
+testar via postman:
+- arquivo colection postman : adooreitest_bruno_colaco_postman.json
+- sail artisan db:seed
 
 </p>
 
